@@ -22,7 +22,7 @@ export default function FilterMoviesCard(props) {
 
   const [genres, setGenres] = useState([{ id: '0', name: "All" }])
 
-    useEffect(() => {
+  useEffect(() => {
     fetch(
       "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
         import.meta.env.VITE_TMDB_KEY
@@ -40,8 +40,8 @@ export default function FilterMoviesCard(props) {
 
   const handleChange = (e, type, value) => {
     e.preventDefault()
-    // Completed later
-  };
+    props.onUserInput(type, value)   // NEW
+  }
   const handleTextChange = e => {
     handleChange(e, "name", e.target.value)
   }
@@ -75,6 +75,9 @@ export default function FilterMoviesCard(props) {
           <Select
             labelId="genre-label"
             id="genre-select"
+            defaultValue=""
+            value={props.genreFilter}
+            onChange={handleGenreChange}
           >
             {genres.map((genre) => {
               return (
