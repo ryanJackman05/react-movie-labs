@@ -1,13 +1,42 @@
-import React from "react";
+import React, {useState, useEffect}  from "react";
 import MovieHeader from "../components/headerMovie/";
 import MovieDetails from "../components/movieDetails/";
 import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import { useParams } from 'react-router';
 
 const MoviePage = (props) => {
-  const movie = props.movie;
-  const images = props.images;
+  const { id } = useParams();
+  const [movie, setMovie] = useState(null);
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    fetch( // Use the movie endpoint to access full details, passing in key to api-key as parameter
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((movie) => {
+        // console.log(movie)
+        setMovie(movie);
+      });
+  }, [id]);
+
+  useEffect(() => {
+    fetch( // Use the movie directory to access movie's images endpoint, passing in key to api-key as parameter
+      `https://api.themoviedb.org/3/movie/${id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+      .then((res) => res.json())
+      .then((json) => json.posters)
+      .then((images) => {
+        // console.log(images)
+        setImages(images);
+      });
+      // eslint-disable-next-line
+  }, []);
+
 
   return (
     <>
@@ -22,23 +51,22 @@ const MoviePage = (props) => {
                 justifyContent: "space-around",
               }}>
                 <ImageList
-                  sx={{
-                    height: "100vh",
-                  }}
+                  sx={{height: "100vh",}}
                   cols={1}
                 >
                   {images.map((image) => (
                     <ImageListItem
-                      key={image}
+                      key={image.file_path}
                       cols={1}
                     >
                       <img
-                        src={`https://image.tmdb.org/t/p/w500/${image}`}
-                        alt={image}
+                        src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
+                        alt={image.file_path}
                       />
                     </ImageListItem>
                   ))}
                 </ImageList>
+
               </div>
             </Grid>
             <Grid size={{xs: 9}}>
