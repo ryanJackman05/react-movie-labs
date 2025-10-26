@@ -7,7 +7,7 @@ import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavouriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import IconButton from "@mui/material/IconButton";
@@ -19,26 +19,26 @@ import { Link } from "react-router";
 
 
 export default function MovieCard({ movie, action }) {
-  const { favorites, addToFavorites } = useContext(MoviesContext);
+  const { Favourites, addToFavourites } = useContext(MoviesContext);
 
-  if (favorites.find((id) => id === movie.id)) {
-    movie.favorite = true;
+  if (Favourites.find((id) => id === movie.id)) {
+    movie.Favourite = true;
   } else {
-    movie.favorite = false
+    movie.Favourite = false
   }
 
-  const handleAddToFavorite = (e) => {
+  const handleAddToFavourite = (e) => {
     e.preventDefault();
-    addToFavorites(movie);
+    addToFavourites(movie);
   };
 
   return (
     <Card>
       <CardHeader
         avatar={
-          movie.favorite ? (
+          movie.Favourite ? (
             <Avatar sx={{ backgroundColor: 'red' }}>
-              <FavoriteIcon />
+              <FavouriteIcon />
             </Avatar>
           ) : null
         }

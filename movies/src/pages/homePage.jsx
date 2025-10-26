@@ -3,7 +3,7 @@ import { getMovies } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner';
-import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
+import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
 
 const HomePage = (props) => {
 
@@ -23,16 +23,16 @@ const HomePage = (props) => {
   const movies = data.results;
 
   // Redundant, but necessary to avoid app crashing.
-  const favorites = movies.filter(m => m.favorite)
-  localStorage.setItem('favorites', JSON.stringify(favorites))
-  const addToFavorites = (movieId) => true 
+  const Favourites = movies.filter(m => m.Favourite)
+  localStorage.setItem('Favourites', JSON.stringify(Favourites))
+  const addToFavourites = (movieId) => true 
 
   return (
     <PageTemplate
       title="Discover Movies"
       movies={movies}
       action={(movie) => {
-        return <AddToFavoritesIcon movie={movie} />
+        return <AddToFavouritesIcon movie={movie} />
       }}
     />
   );
